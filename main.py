@@ -64,6 +64,12 @@ def local_css():
     color: #f8f9fa;
 }
 
+h1 {
+    color: #212529;
+}
+.dark-mode h1 {
+    color: #f8f9fa;
+}
 /* Card-like containers for main content */
 .content-card {
     background-color: #ffffff;
@@ -199,6 +205,9 @@ local_css()
 # Apply dark mode if enabled
 if st.session_state.dark_mode:
     st.markdown('<div class="dark-mode">', unsafe_allow_html=True)
+    dark_mode_wrapper_open = True
+else:
+    dark_mode_wrapper_open = False
 
 def get_exchange_rates(base_currency='USD'):
     """Fetch exchange rates from API with improved error handling"""
@@ -896,6 +905,9 @@ def main():
                 if (condition == "above" and current_rate > threshold) or \
                    (condition == "below" and current_rate < threshold):
                     st.toast(f"🚨 Alert: {base}/{target} is {current_rate:.4f} ({condition} {threshold})", icon="⚠️")
+
+if dark_mode_wrapper_open:
+    st.markdown('</div>', unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()                                               
